@@ -33,6 +33,7 @@ class InterviewerTests(unittest.TestCase):
         self.assertEqual(len(brook.booked_events), 2)
 
     def test_meeting_too_early(self):
+        """ Attempt to book an interview which starts before the working day of the interviewer starts. """
         cameron = Interviewer(work_start=datetime.time(hour=9, minute=15, second=0),
                               work_end=datetime.time(hour=17, minute=45, second=0))
         with self.assertRaises(AssertionError):
@@ -41,6 +42,7 @@ class InterviewerTests(unittest.TestCase):
         self.assertEqual(len(cameron.booked_events), 0)
 
     def test_meeting_too_late(self):
+        """ Attempt to book an interview which ends after the working day of the interviewer ends. """
         danny = Interviewer(work_start=datetime.time(hour=9, minute=25, second=18),
                             work_end=datetime.time(hour=17, minute=38, second=42))
         with self.assertRaises(AssertionError):
@@ -110,6 +112,7 @@ class InterviewerTests(unittest.TestCase):
 
 
 class EventTests(unittest.TestCase):
+    """ Verify that an event end is correctly computed. """
     def test_end(self):
         event = Event(start=datetime.datetime(year=2000, month=6, day=15, hour=12, minute=30, second=30),
                       duration=datetime.timedelta(seconds=3700))
