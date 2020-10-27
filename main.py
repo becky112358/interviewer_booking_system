@@ -11,10 +11,10 @@ class Interviewer:
         add_event = True
         event = Event(start, duration)
         end = event.end()
-        if start < self.work_start:
+        if start.time() < self.work_start:
             add_event = False
             print("Requested event starts too early")
-        elif end > self.work_end:
+        elif end.time() > self.work_end:
             add_event = False
             print("Requested event runs until too late")
         else:
@@ -34,23 +34,13 @@ class Event:
         self.duration = duration
 
     def end(self):
-        duration_hours = self.duration // 60
-        duration_minutes = (self.duration % 3600 - self.duration % 60) / 60
-        duration_seconds = self.duration % 60
-
-        return datetime.time(hour=self.start.hour, # + duration_hours,
-                             minute=self.start.minute, #+ duration_minutes,
-                             second=self.start.second) #+ duration_seconds)
+        return self.start + self.duration
 
 
 bob_workstart = datetime.time(hour=8, minute=0, second=0)
 bob_workend = datetime.time(hour=16, minute=0, second=0)
 bob = Interviewer(work_start=bob_workstart, work_end=bob_workend)
-bob.book(datetime.time(hour=10, minute=0, second=0), 3600)
-
-t = datetime.timedelta(seconds=589)
-print(t)
-t.
-t1 = datetime.time(hour=5, minute=3, second=8)
-print(t1)
-t2 = datetime.time(hour=t1.hour + t.hour, minute=t1.hour + t.hours)
+bob.book(datetime.datetime(year=2020, month=10, day=27, hour=10, minute=0, second=0),
+         datetime.timedelta(seconds=3600))
+bob.book(datetime.datetime(year=2020, month=10, day=27, hour=10, minute=1, second=0),
+         datetime.timedelta(seconds=20))
