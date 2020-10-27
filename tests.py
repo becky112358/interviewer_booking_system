@@ -47,3 +47,18 @@ class InterviewerTests(unittest.TestCase):
             danny.book(datetime.datetime(year=2098, month=7, day=6, hour=17),
                        datetime.timedelta(seconds=3600))
         self.assertEqual(len(danny.booked_events), 0)
+
+    def test_meeting_overlap_first_before_second(self):
+        """
+        Attempt to book two overlapping interviews
+        First      |----------|
+        Second          |----------|
+        """
+        ed = Interviewer(work_start=datetime.time(hour=13),
+                         work_end=datetime.time(hour=18))
+        ed.book(datetime.datetime(year=2020, month=10, day=27, hour=14),
+                datetime.timedelta(seconds=3600))
+        with self.assertRaises(AssertionError):
+            ed.book(datetime.datetime(year=2020, month=10, day=27, hour=14),
+                    datetime.timedelta(seconds=3600))
+        self.assertEqual(len(ed.booked_events), 1)
