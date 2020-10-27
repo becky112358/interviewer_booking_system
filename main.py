@@ -1,6 +1,3 @@
-import datetime
-
-
 class Interviewer:
     def __init__(self, work_start, work_end):
         self.work_start = work_start
@@ -25,12 +22,3 @@ class Event:
 
     def end(self):
         return self.start + self.duration
-
-
-bob_workstart = datetime.time(hour=8, minute=0, second=0)
-bob_workend = datetime.time(hour=16, minute=0, second=0)
-bob = Interviewer(work_start=bob_workstart, work_end=bob_workend)
-bob.book(datetime.datetime(year=2020, month=10, day=27, hour=10, minute=0, second=0),
-         datetime.timedelta(seconds=3600))
-bob.book(datetime.datetime(year=2020, month=10, day=27, hour=10, minute=1, second=0),
-         datetime.timedelta(seconds=20))
