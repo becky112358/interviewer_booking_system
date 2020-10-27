@@ -1,7 +1,7 @@
 import datetime
 import unittest
 
-from main import Interviewer
+from main import Event, Interviewer
 
 
 class InterviewerTests(unittest.TestCase):
@@ -106,4 +106,16 @@ class InterviewerTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             mark.book(datetime.datetime(year=1900, month=1, day=1, hour=14),
                       datetime.timedelta(seconds=10800))
-        self.assertEqual(len(mark.booked_events), 2)
+        self.assertEqual(len(mark.booked_events), 1)
+
+
+class EventTests(unittest.TestCase):
+    def test_end(self):
+        event = Event(start=datetime.datetime(year=2000, month=6, day=15, hour=12, minute=30, second=30),
+                      duration=datetime.timedelta(seconds=3700))
+        self.assertEqual(event.end().year, 2000)
+        self.assertEqual(event.end().month, 6)
+        self.assertEqual(event.end().day, 15)
+        self.assertEqual(event.end().hour, 13)
+        self.assertEqual(event.end().minute, 32)
+        self.assertEqual(event.end().second, 10)
