@@ -7,8 +7,8 @@ class Interviewer:
     def book(self, start, duration):
         event = Event(start, duration)
         end = event.end()
-        assert start.time() > self.work_start, "Requested event starts too early"
-        assert end.time() < self.work_end, "Requested event runs until too late"
+        assert start.time() >= self.work_start, "Requested event starts too early"
+        assert end.time() <= self.work_end, "Requested event runs until too late"
         for existing_event in self.booked_events:
             assert end < existing_event.start or existing_event.end() < start, \
                 "Requested event overlaps with existing event"
