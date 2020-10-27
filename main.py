@@ -8,24 +8,14 @@ class Interviewer:
         self.booked_events = []
 
     def book(self, start, duration):
-        add_event = True
         event = Event(start, duration)
         end = event.end()
-        if start.time() < self.work_start:
-            add_event = False
-            print("Requested event starts too early")
-        elif end.time() > self.work_end:
-            add_event = False
-            print("Requested event runs until too late")
-        else:
-            for existing_event in self.booked_events:
-                if (start < existing_event.start < end) \
-                        or (existing_event.start < start < existing_event.end()):
-                    print("Requested event overlaps with existing event")
-                    add_event = False
-
-        if add_event:
-            self.booked_events.append(event)
+        assert start.time() > self.work_start, "Requested event starts too early"
+        assert end.time() < self.work_end, "Requested event runs until too late"
+        for existing_event in self.booked_events:
+            assert end < existing_event.start or existing_event.end() < start, \
+                "Requested event overlaps with existing event"
+        self.booked_events.append(event)
 
 
 class Event:
