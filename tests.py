@@ -39,3 +39,11 @@ class InterviewerTests(unittest.TestCase):
             cameron.book(datetime.datetime(year=2000, month=1, day=2, hour=3, minute=4, second=5),
                          datetime.timedelta(seconds=12345))
         self.assertEqual(len(cameron.booked_events), 0)
+
+    def test_meeting_too_late(self):
+        danny = Interviewer(work_start=datetime.time(hour=9, minute=25, second=18),
+                            work_end=datetime.time(hour=17, minute=38, second=42))
+        with self.assertRaises(AssertionError):
+            danny.book(datetime.datetime(year=2098, month=7, day=6, hour=17),
+                       datetime.timedelta(seconds=3600))
+        self.assertEqual(len(danny.booked_events), 0)
